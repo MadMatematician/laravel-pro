@@ -24,8 +24,6 @@ class CreateTablePlanets extends Migration
             $table->string('terrain');
             $table->string('surface_water');
             $table->string('population');
-//            $table->json('residents');
-//            $table->json('films');
             $table->timestamp('created');
             $table->timestamp('edited');
         });

@@ -24,6 +24,9 @@ class CreateTablePeoples extends Migration
 			$table->string('birth_year');
 			$table->string('gender');
 			$table->string('homeworld');
+			$table->string('species');
+            $table->timestamp('created');
+            $table->timestamp('edited');
         });
     }
 

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\People;
 use App\Models\Planet;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Mockery\Exception;
 
@@ -14,13 +13,12 @@ class RetrievePeoples extends Controller
 {
     //
 
-    private DB $db;
     private string $sourcePeople = 'https://swapi.dev/api/people';
     private string $sourcePlanet = 'https://swapi.dev/api/planets/';
     private array $headers = [];
 
     public function __construct(){
-        $this->db = new DB();
+//        $this->db = new DB();
     }
 
     public function peopleFromSource(){
@@ -31,19 +29,21 @@ class RetrievePeoples extends Controller
             $output = $this->myCurl( $output->next );
             $people = new People();
             $planet = new Planet();
-            foreach ($output->results as $key => $value){
-                $newPeople['name'] = $value->name;
-                $newPeople['height'] = (int)$value->height ?:null;
-                $newPeople['hair_color'] = $value->hair_color;
-                $newPeople['skin_color'] = $value->skin_color;
-                $newPeople['eye_color'] = $value->eye_color;
-                $newPeople['birth_year'] = $value->birth_year;
-                $newPeople['gender'] = $value->gender;
-                $newPeople['mass'] = (int)$value->mass ?:null;
-                $newPeople['homeworld'] = explode('/', strrev($value->homeworld))[1];
+            foreach ($output->results as $personDetails){
+                $newPeople['name'] = $personDetails->name;
+                $newPeople['height'] = (int)$personDetails->height ?:null;
+                $newPeople['hair_color'] = $personDetails->hair_color;
+                $newPeople['skin_color'] = $personDetails->skin_color;
+                $newPeople['eye_color'] = $personDetails->eye_color;
+                $newPeople['birth_year'] = $personDetails->birth_year;
+                $newPeople['gender'] = $personDetails->gender;
+                $newPeople['mass'] = (int)$personDetails->mass ?:null;
+                $newPeople['homeworld'] = explode('/', strrev($personDetails->homeworld))[1];
+                $newPeople['created'] = date('Y-m-d H:i:s', strtotime($personDetails->created));
+                $newPeople['edited'] = date('Y-m-d H:i:s', strtotime($personDetails->edited));
                 $people->saveNew( $newPeople );
 
-                $planetDetails = $this->myCurl($value->homeworld);
+                $planetDetails = $this->myCurl($personDetails->homeworld);
                 $id = $newPeople['homeworld'];
                 $newPlanet['id'] = $id;
                 $newPlanet['name'] = $planetDetails->name;

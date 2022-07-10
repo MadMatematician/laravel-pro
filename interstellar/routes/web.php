@@ -16,4 +16,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
 Route::get('/retrieve', [ 'uses' => '\App\Http\Controllers\RetrievePeoples@peopleFromSource']);
+
+Route::group(['prefix' => '/api'], function (){
+    Route::get('/people', [ 'uses' => '\App\Http\Controllers\PeopleController@list']);
+    Route::get('/people/{peopleId}', [ 'uses' => '\App\Http\Controllers\PeopleController@list']);
+    //Route::get('/api/people/{peopleId}', [ 'uses' => '\App\Http\Controllers\PeopleControllers@details']);
+});

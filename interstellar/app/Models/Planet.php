@@ -14,14 +14,14 @@ class Planet extends Model
     use HasFactory;
 
     private string $base_table = 'planets';
-    private string $resident_table = 'people';
+    private string $resident_table = 'peoples';
     private $db;
 
-    public Integer  $id;
+    public $id;
     public string   $name = '';
-    public Integer  $rotation_period;
-    public Integer  $orbital_period;
-    public Integer  $diameter;
+    public  $rotation_period;
+    public  $orbital_period;
+    public  $diameter;
     public string   $climate = '';
     public string   $gravity = '';
     public string   $terrain = '';
@@ -36,21 +36,23 @@ class Planet extends Model
         parent::__construct();
         $this->db = new DB();
         if ( !empty($id) ){
-            $this->loadBy($id);
+            $this->loadById($id);
         }
 
 
     }
 
-    public function loadBy($id){
-        $query = $this->db->table($this->base_table . ' as p' );
+    private function loadById($id){
+
+        $query = $this->db::table($this->base_table . ' as p' );
         $result = $query->where('p.id', '=', $id)->first();
         if ( !empty($result)){
+//            $this->id = $id;
             foreach ($result as $key => $val){
-                $this->$$key = $val;
+                $this->$key = is_numeric($val) ? (int)$val : $val;
             }
-            $query = $this->db->table($this->resident_table . 'as p2');
-            $this->residents = $query->where('cast( p2.homeworld as decimal)', '=', $id)->count('id');
+            $query = $this->db::table($this->resident_table . ' as p2');
+            $this->residents = $query->where('p2.homeworld', $id)->count('id');
 
         }else{
             throw new Exception('No planet found');
@@ -65,6 +67,23 @@ class Planet extends Model
         }catch (\mysql_xdevapi\Exception $e){
             return false;
         }
+    }
+    public function getDetails(){
+        return [
+                'id' => $this->id,
+                'name' => $this->name,
+                'rotation_period' => $this->rotation_period,
+                'orbital_period' => $this->orbital_period,
+                'diameter' => $this->diameter,
+                'climate' => $this->climate,
+                'gravity' => $this->gravity,
+                'terrain' => $this->terrain,
+                'surface_water' => $this->surface_water,
+                'population' => $this->population,
+                'residents' => $this->residents,
+                'created' => $this->created,
+                'edited' => $this->edited,
+        ];
     }
     public function getAll(){
 
