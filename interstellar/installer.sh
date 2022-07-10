@@ -5,7 +5,7 @@
 composer install --no-dev --no-interaction --no-progress --no-scripts --optimize-autoloader --prefer-dist
 
 echo migration table and routine:
-php artisan migraion
+php artisan migrate
 
 echo
 echo Populate db from https://swapi.dev/api/people/
