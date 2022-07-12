@@ -18,7 +18,11 @@ Route::get('/', function () {
 });
 
 Route::get('/retrieve', [ 'uses' => '\App\Http\Controllers\RetrievePeoples@peopleFromSource']);
+//React.js
+Route::get('/people', function () { return view('people'); });
+//Route::get('/table', function () { return view('table'); });
 
+//API
 Route::group(['prefix' => '/api'], function (){
     Route::get('/people', [ 'uses' => '\App\Http\Controllers\PeopleController@list']);
     Route::get('/people/{peopleId}', [ 'uses' => '\App\Http\Controllers\PeopleController@list']);
