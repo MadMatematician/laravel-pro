@@ -16,17 +16,17 @@ class CreateTablePeoples extends Migration
         Schema::create('peoples', function (Blueprint $table) {
             $table->id()->unique();
             $table->string('name');
-            $table->integer('height');
-			$table->integer('mass');
-			$table->string('hair_color');
-			$table->string('skin_color');
-			$table->string('eye_color');
-			$table->string('birth_year');
-			$table->string('gender');
-			$table->string('homeworld');
-			$table->string('species');
-            $table->timestamp('created');
-            $table->timestamp('edited');
+            $table->integer('height')->nullable();
+			$table->integer('mass')->nullable();
+			$table->string('hair_color')->nullable();
+			$table->string('skin_color')->nullable();
+			$table->string('eye_color')->nullable();
+			$table->string('birth_year')->nullable();
+			$table->string('gender')->nullable();
+			$table->string('homeworld')->nullable();
+//			$table->string('species')->nullable();
+            $table->timestamp('created')->nullable();
+            $table->timestamp('edited')->nullable();
         });
     }
 
