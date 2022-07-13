@@ -17,6 +17,13 @@
             body {
                 font-family: 'Nunito', sans-serif;
             }
+            a{
+                color: blue;
+                text-decoration: underline;
+            }
+            a:hover{
+                cursor: pointer;
+            }
             div {
                 overflow: hidden;
                 display: block;
@@ -28,14 +35,20 @@
             .col-sm-1{
                 float: left;
                 max-width: 10%;
+                min-width: 10%;
+                width: 10%;
             }
             .col-sm-2{
                 float: left;
                 max-width: 20%;
+                min-width: 20%;
+                width: 20%;
             }
             .col-sm-8{
                 float: left;
                 max-width: 80%;
+                min-width: 80%;
+                width: 80%;
             }
             .col-sm-10{
                 float: left;
@@ -49,7 +62,7 @@
                 font-family: arial, sans-serif;
             }
 
-            #students {
+            #people {
                 text-align: center;
                 font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
                 border-collapse: collapse;
@@ -57,43 +70,47 @@
                 width: 100%;
             }
 
-            #students td, #students th {
+            #people td, #people th {
                 border: 1px solid #ddd;
                 padding: 8px;
             }
 
-            #students tr:nth-child(even){background-color: #f2f2f2;}
+            #people tr:nth-child(even){background-color: #f2f2f2;}
 
-            #students tr:hover {background-color: #ddd;}
+            #people tr:hover {background-color: #ddd;}
 
-            #students th {
+            #people th {
                 padding-top: 12px;
                 padding-bottom: 12px;
                 text-align: center;
                 background-color: #4CAF50;
                 color: white;
             }
+            .button{
+                width: 50%;
+                padding-left: 45%;
+            }
+            .popup{
+                width: 80%;
+                padding-left: 35%;
+            }
 
             #popUp{
                 position: absolute;
-                width: 600px;
-                max-height: 300px;
-                top: 50%;
-                left: 50%;
+                width: 30%;
+                max-height: 15%;
+                top: 43%;
+                left: 35%;
                 padding: 10px;
                 background-color: lightgreen;
             }
         </style>
-{{--        <script !src=""></script>--}}
-        <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
-        <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
-{{--        <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>--}}
-{{--        <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>--}}
+{{--        <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>--}}
+{{--        <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>--}}
+        <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+        <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
         <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-        <script type="text/babel">
 
-
-        </script>
     </head>
     <body class="antialiased">
 
@@ -119,7 +136,6 @@
             }
 
             renderDetails() {
-                //console.log(this.state.results);
                 return (
                     this.config().columns.map( (col) => {
                         return <div key={col} className="row"><div className="col-sm-2 bold">{col}: </div><div className="col-sm-8">{this.props.planet[col]}</div></div>
@@ -131,7 +147,6 @@
             }
 
             render(){
-                // console.log(this.state)
                 if ( this.state.render ){
                     return (
                         <div id="popUp">
@@ -139,7 +154,9 @@
                                 {this.renderDetails()}
                             </div>
                             <div className="row">
-                                <input type="button" value={'chiudi'} onClick={()=>this.close()}/>
+                                <div className="button">
+                                    <input type="button" value={'chiudi'} onClick={()=>this.close()}/>
+                                </div>
                             </div>
                         </div>
                     );
@@ -226,14 +243,13 @@
                             <td>{person.mass}</td>
                             <td>{person.created}</td>
                             <td>{person.edited}</td>
-                            <td><a id={idWorld} onClick={(evt) => this.showPlanetDetails(evt)}>{person.homeworld}</a></td>
+                            <td><a id={idWorld}  onClick={(evt) => this.showPlanetDetails(evt)}>{person.homeworld}</a></td>
                         </tr>
                     )
                 })
             }
 
             renderTableHeader() {
-                // console.log(this);
                 let header = this.config().columns
                 return header.map((key, index) => {
                     return <th key={index}>{key.toUpperCase()}</th>
@@ -241,12 +257,11 @@
             }
 
             render() {
-                // this.getInfo();
                 return (
                     <div>
                         <div>
-                            <h1 id='title'>React Dynamic Table</h1>
-                            <table id='students'>
+                            <h1 id='title'>Interstellar People List</h1>
+                            <table id='people'>
                                 <tbody>
                                 <tr>{this.renderTableHeader()}</tr>
                                 {this.renderTableData()}
