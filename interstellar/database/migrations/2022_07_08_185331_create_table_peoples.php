@@ -24,7 +24,6 @@ class CreateTablePeoples extends Migration
 			$table->string('birth_year')->nullable();
 			$table->string('gender')->nullable();
 			$table->string('homeworld')->nullable();
-//			$table->string('species')->nullable();
             $table->timestamp('created')->nullable();
             $table->timestamp('edited')->nullable();
         });
